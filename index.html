@@ -7,199 +7,131 @@
   <title>TheOnlyDvaergen - RIP & SHIP</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      color: #fff;
       background: url('https://i.imgur.com/pAqCHqz.jpeg') no-repeat center center fixed;
       background-size: cover;
+      color: #fff;
     }
     body::before {
       content: "";
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0, 0, 0, 0.7);
       z-index: -1;
     }
     header {
-      background-color: rgba(30, 30, 30, 0.9);
-      padding: 1rem 2rem;
+      background-color: #111;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 1rem 2rem;
       position: sticky;
       top: 0;
-      z-index: 100;
-      border-bottom: 1px solid #444;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.6);
     }
     .logo {
       font-size: 1.5rem;
-      font-weight: 600;
-    }
-    .flags img {
-      width: 32px;
-      margin-left: 10px;
-      cursor: pointer;
-    }
-    .cart-btn {
-      cursor: pointer;
-      background-color: #ffc439;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 6px;
       font-weight: bold;
-      color: black;
     }
-    .cart-dropdown {
-      display: none;
-      position: absolute;
-      top: 60px;
-      right: 20px;
-      background-color: #1e1e1e;
-      padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
-      max-width: 250px;
+    nav a {
+      margin-left: 20px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
     }
-    .cart-dropdown.show {
-      display: block;
-    }
-    .cart-item {
-      margin: 10px 0;
-      padding: 5px;
-      background-color: #333;
-      border-radius: 6px;
-    }
-    .cart-item button {
-      background-color: #ff6666;
-      border: none;
-      padding: 5px;
-      border-radius: 4px;
-      cursor: pointer;
-      color: white;
+    nav a:hover {
+      color: #ffc439;
     }
     .container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      max-width: 1200px;
+      margin: 2rem auto;
+      display: flex;
+      flex-wrap: wrap;
       gap: 2rem;
-      padding: 2rem;
+      justify-content: center;
     }
     .card {
-      background-color: rgba(30, 30, 30, 0.9);
+      background: rgba(20, 20, 20, 0.95);
       border: 1px solid #333;
-      border-radius: 12px;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 300px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.4);
       text-align: center;
-      padding: 1rem;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 15px rgba(255,255,255,0.1);
     }
     .card img {
       width: 100%;
-      height: 180px;
+      height: 200px;
       object-fit: cover;
-      border-radius: 8px;
     }
-    .card h3, .card p {
-      margin: 0.5rem 0;
+    .card h3 {
+      margin: 10px 0 0;
+      font-size: 1.2rem;
+    }
+    .card p {
+      color: #ccc;
     }
     .card button {
+      margin: 1rem;
+      padding: 10px 20px;
       background: #ffc439;
       border: none;
-      padding: 10px 20px;
-      color: black;
-      font-weight: bold;
       border-radius: 6px;
+      font-weight: bold;
       cursor: pointer;
-      margin-top: 10px;
+      color: #111;
     }
     footer {
+      background: #111;
       text-align: center;
-      padding: 1rem;
-      background-color: rgba(30, 30, 30, 0.9);
-      border-top: 1px solid #333;
       color: #888;
+      padding: 1rem;
+      margin-top: 3rem;
     }
   </style>
 </head>
 <body>
   <header>
     <div class="logo">TheOnlyDvaergen</div>
-    <div class="flags">
-      <img src="https://flagcdn.com/w40/dk.png" alt="Dansk" onclick="switchLanguage('da')">
-      <img src="https://flagcdn.com/w40/gb.png" alt="English" onclick="switchLanguage('en')">
-    </div>
-    <button class="cart-btn" onclick="toggleCartDropdown()">Indkøbskurv</button>
-    <div class="cart-dropdown" id="cart-dropdown">
-      <h3>Kurv</h3>
-      <div id="cart-items"></div>
-      <button onclick="goToCheckout()">Gå til betaling</button>
-    </div>
+    <nav>
+      <a href="#">Forside</a>
+      <a href="#">Kontakt</a>
+      <a href="#">Live</a>
+      <a href="#" onclick="alert('Kurv kommer snart!')">🛒 Kurv</a>
+    </nav>
   </header>
 
   <div class="container">
     <div class="card">
       <img src="https://i.imgur.com/yMQSnVZ.jpeg" alt="Stellar Crown">
-      <h3>Stellar Crown (1 pakke)</h3>
-      <p>Pris: 45 kr</p>
-      <button onclick="addToCart('Stellar Crown', 45)">Læg i kurv</button>
+      <h3>Stellar Crown</h3>
+      <p>1 pakke - 39 kr</p>
+      <button onclick="alert('Lagt i kurv: Stellar Crown')">Læg i kurv</button>
     </div>
     <div class="card">
       <img src="https://i.imgur.com/ablg1tH.jpeg" alt="Shrouded Fable">
-      <h3>Shrouded Fable (1 pakker)</h3>
-      <p>Pris: 45 kr</p>
-      <button onclick="addToCart('Shrouded Fable', 45)">Læg i kurv</button>
+      <h3>Shrouded Fable</h3>
+      <p>2 pakker - 75 kr</p>
+      <button onclick="alert('Lagt i kurv: Shrouded Fable')">Læg i kurv</button>
     </div>
     <div class="card">
       <img src="https://i.imgur.com/Hwig0yq.jpeg" alt="Journey Together">
-      <h3>Journey Together (1 pakker)</h3>
-      <p>Pris: 45 kr</p>
-      <button onclick="addToCart('Journey Together', 45)">Læg i kurv</button>
+      <h3>Journey Together</h3>
+      <p>3 pakker - 110 kr</p>
+      <button onclick="alert('Lagt i kurv: Journey Together')">Læg i kurv</button>
     </div>
   </div>
 
   <footer>
-    &copy; 2025 TheOnlyDvaergen - Kontakt os via Discord for spørgsmål.
+    &copy; 2025 TheOnlyDvaergen - RIP & SHIP
   </footer>
-
-  <script>
-    let cart = [];
-
-    function addToCart(item, price) {
-      cart.push({ item, price });
-      updateCart();
-    }
-
-    function updateCart() {
-      const cartItemsEl = document.getElementById('cart-items');
-      cartItemsEl.innerHTML = '';
-      cart.forEach((i, index) => {
-        const div = document.createElement('div');
-        div.classList.add('cart-item');
-        div.innerHTML = `${i.item} - ${i.price} kr <button onclick="removeFromCart(${index})">Fjern</button>`;
-        cartItemsEl.appendChild(div);
-      });
-    }
-
-    function removeFromCart(index) {
-      cart.splice(index, 1);
-      updateCart();
-    }
-
-    function toggleCartDropdown() {
-      document.getElementById('cart-dropdown').classList.toggle('show');
-    }
-
-    function goToCheckout() {
-      alert("Gå til betaling (her kan PayPal checkout implementeres).");
-    }
-
-    function switchLanguage(lang) {
-      alert("Skift sprog til " + lang);
-    }
-  </script>
 </body>
 </html>
