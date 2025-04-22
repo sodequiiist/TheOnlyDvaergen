@@ -32,17 +32,42 @@
       margin-left: 10px;
       cursor: pointer;
     }
-    .hero {
-      padding: 2rem;
-      text-align: center;
+    .cart-btn {
+      cursor: pointer;
+      background-color: #ffc439;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      color: black;
     }
-    .hero h1 {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
+    .cart-dropdown {
+      display: none;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background-color: #1e1e1e;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      max-width: 250px;
     }
-    .hero p {
-      font-size: 1.1rem;
-      color: #ccc;
+    .cart-dropdown.show {
+      display: block;
+    }
+    .cart-item {
+      margin: 10px 0;
+      padding: 5px;
+      background-color: #333;
+      border-radius: 6px;
+    }
+    .cart-item button {
+      background-color: #ff6666;
+      border: none;
+      padding: 5px;
+      border-radius: 4px;
+      cursor: pointer;
+      color: white;
     }
     .container {
       display: grid;
@@ -81,15 +106,6 @@
       cursor: pointer;
       margin-top: 10px;
     }
-    .checkout {
-      text-align: center;
-      padding: 2rem;
-      border-top: 1px solid #444;
-    }
-    .checkout ul {
-      list-style: none;
-      padding: 0;
-    }
     footer {
       text-align: center;
       padding: 1rem;
@@ -106,46 +122,33 @@
       <img src="https://flagcdn.com/w40/dk.png" alt="Dansk" onclick="switchLanguage('da')">
       <img src="https://flagcdn.com/w40/gb.png" alt="English" onclick="switchLanguage('en')">
     </div>
+    <button class="cart-btn" onclick="toggleCartDropdown()">Indkøbskurv</button>
+    <div class="cart-dropdown" id="cart-dropdown">
+      <h3>Kurv</h3>
+      <div id="cart-items"></div>
+      <button onclick="goToCheckout()">Gå til betaling</button>
+    </div>
   </header>
-
-  <div class="hero">
-    <h1>Velkommen til RIP & SHIP</h1>
-    <p>Vælg dine Scarlet & Violet Pokémon pakker og betal direkte via PayPal.</p>
-  </div>
 
   <div class="container">
     <div class="card">
       <img src="https://via.placeholder.com/250x150?text=Stellar+Crown" alt="Stellar Crown">
-      <h3 data-da="Stellar Crown (1 pakke)" data-en="Stellar Crown (1 pack)">Stellar Crown (1 pakke)</h3>
-      <p data-da="Pris: 39 kr" data-en="Price: 39 DKK">Pris: 39 kr</p>
+      <h3>Stellar Crown (1 pakke)</h3>
+      <p>Pris: 39 kr</p>
       <button onclick="addToCart('Stellar Crown', 39)">Læg i kurv</button>
     </div>
     <div class="card">
       <img src="https://via.placeholder.com/250x150?text=Shrouded+Fable" alt="Shrouded Fable">
-      <h3 data-da="Shrouded Fable (2 pakker)" data-en="Shrouded Fable (2 packs)">Shrouded Fable (2 pakker)</h3>
-      <p data-da="Pris: 75 kr" data-en="Price: 75 DKK">Pris: 75 kr</p>
+      <h3>Shrouded Fable (2 pakker)</h3>
+      <p>Pris: 75 kr</p>
       <button onclick="addToCart('Shrouded Fable', 75)">Læg i kurv</button>
     </div>
     <div class="card">
       <img src="https://via.placeholder.com/250x150?text=Journey+Together" alt="Journey Together">
-      <h3 data-da="Journey Together (3 pakker)" data-en="Journey Together (3 packs)">Journey Together (3 pakker)</h3>
-      <p data-da="Pris: 110 kr" data-en="Price: 110 DKK">Pris: 110 kr</p>
+      <h3>Journey Together (3 pakker)</h3>
+      <p>Pris: 110 kr</p>
       <button onclick="addToCart('Journey Together', 110)">Læg i kurv</button>
     </div>
-  </div>
-
-  <div class="checkout">
-    <h2 id="cart-title">Kurv</h2>
-    <ul id="cart"></ul>
-    <p id="total">Total: 0 kr</p>
-    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" onsubmit="return updatePayPalAmount();">
-      <input type="hidden" name="business" value="DIN_PAYPAL_EMAIL">
-      <input type="hidden" name="cmd" value="_xclick">
-      <input type="hidden" name="item_name" value="Pokémon pakker fra TheOnlyDvaergen">
-      <input type="hidden" name="currency_code" value="DKK">
-      <input type="hidden" name="amount" id="paypal-amount" value="0">
-      <button type="submit">Betal med PayPal</button>
-    </form>
   </div>
 
   <footer>
@@ -161,35 +164,31 @@
     }
 
     function updateCart() {
-      const cartEl = document.getElementById('cart');
-      const totalEl = document.getElementById('total');
-      cartEl.innerHTML = '';
-      let total = 0;
-      cart.forEach(i => {
-        total += i.price;
-        const li = document.createElement('li');
-        li.textContent = `${i.item} - ${i.price} kr`;
-        cartEl.appendChild(li);
+      const cartItemsEl = document.getElementById('cart-items');
+      cartItemsEl.innerHTML = '';
+      cart.forEach((i, index) => {
+        const div = document.createElement('div');
+        div.classList.add('cart-item');
+        div.innerHTML = `${i.item} - ${i.price} kr <button onclick="removeFromCart(${index})">Fjern</button>`;
+        cartItemsEl.appendChild(div);
       });
-      totalEl.textContent = `Total: ${total} kr`;
     }
 
-    function getCartTotal() {
-      return cart.reduce((sum, i) => sum + i.price, 0);
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
     }
 
-    function updatePayPalAmount() {
-      const total = getCartTotal();
-      document.getElementById('paypal-amount').value = total;
-      return true;
+    function toggleCartDropdown() {
+      document.getElementById('cart-dropdown').classList.toggle('show');
+    }
+
+    function goToCheckout() {
+      alert("Gå til betaling (her kan PayPal checkout implementeres).");
     }
 
     function switchLanguage(lang) {
-      document.querySelectorAll('[data-da]').forEach(el => {
-        el.textContent = el.getAttribute(`data-${lang}`);
-      });
-      document.getElementById('cart-title').textContent = lang === 'en' ? 'Cart' : 'Kurv';
-      updateCart();
+      alert("Skift sprog til " + lang);
     }
   </script>
 </body>
