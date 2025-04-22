@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="da">
 <head>
@@ -9,11 +10,20 @@
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background-color: #111;
-      color: #eee;
+      color: #fff;
+      background: url('https://i.imgur.com/pAqCHqz.jpeg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: -1;
     }
     header {
-      background-color: #1e1e1e;
+      background-color: rgba(30, 30, 30, 0.9);
       padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
@@ -76,7 +86,7 @@
       padding: 2rem;
     }
     .card {
-      background-color: #1e1e1e;
+      background-color: rgba(30, 30, 30, 0.9);
       border: 1px solid #333;
       border-radius: 12px;
       text-align: center;
@@ -89,7 +99,7 @@
     }
     .card img {
       width: 100%;
-      height: 150px;
+      height: 180px;
       object-fit: cover;
       border-radius: 8px;
     }
@@ -109,7 +119,7 @@
     footer {
       text-align: center;
       padding: 1rem;
-      background-color: #1e1e1e;
+      background-color: rgba(30, 30, 30, 0.9);
       border-top: 1px solid #333;
       color: #888;
     }
@@ -132,19 +142,19 @@
 
   <div class="container">
     <div class="card">
-      <img src="https://via.placeholder.com/250x150?text=Stellar+Crown" alt="Stellar Crown">
+      <img src="https://i.imgur.com/yMQSnVZ.jpeg" alt="Stellar Crown">
       <h3>Stellar Crown (1 pakke)</h3>
       <p>Pris: 39 kr</p>
       <button onclick="addToCart('Stellar Crown', 39)">Læg i kurv</button>
     </div>
     <div class="card">
-      <img src="https://via.placeholder.com/250x150?text=Shrouded+Fable" alt="Shrouded Fable">
+      <img src="https://i.imgur.com/ablg1tH.jpeg" alt="Shrouded Fable">
       <h3>Shrouded Fable (2 pakker)</h3>
       <p>Pris: 75 kr</p>
       <button onclick="addToCart('Shrouded Fable', 75)">Læg i kurv</button>
     </div>
     <div class="card">
-      <img src="https://via.placeholder.com/250x150?text=Journey+Together" alt="Journey Together">
+      <img src="https://i.imgur.com/Hwig0yq.jpeg" alt="Journey Together">
       <h3>Journey Together (3 pakker)</h3>
       <p>Pris: 110 kr</p>
       <button onclick="addToCart('Journey Together', 110)">Læg i kurv</button>
