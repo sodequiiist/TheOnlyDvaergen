@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TheOnlyDvaergen</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #f4f4f4; color: #333; }
+    header { background: #222; color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.5rem; font-weight: bold; }
+    .flags img { width: 30px; cursor: pointer; margin-left: 10px; }
+    .container { padding: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+    .card { background: white; padding: 1rem; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; }
+    .card img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; }
+    .card button { background: #0070ba; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; margin-top: 1rem; }
+    .checkout { margin-top: 2rem; text-align: center; }
+    .paypal-button { margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">TheOnlyDvaergen</div>
+    <div class="flags">
+      <img src="https://flagcdn.com/w40/dk.png" alt="Dansk" onclick="switchLanguage('da')">
+      <img src="https://flagcdn.com/w40/gb.png" alt="English" onclick="switchLanguage('en')">
+    </div>
+  </header>
+  
+  <div class="container">
+    <div class="card">
+      <img src="https://via.placeholder.com/250x150?text=Stellar+Crown" alt="Stellar Crown">
+      <h3 class="title" data-da="Stellar Crown (1 pakke)" data-en="Stellar Crown (1 pack)">Stellar Crown (1 pakke)</h3>
+      <p class="price" data-da="Pris: 39 kr" data-en="Price: 39 DKK">Pris: 39 kr</p>
+      <button onclick="addToCart('Stellar Crown', 39)">Læg i kurv</button>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/250x150?text=Shrouded+Fable" alt="Shrouded Fable">
+      <h3 class="title" data-da="Shrouded Fable (2 pakker)" data-en="Shrouded Fable (2 packs)">Shrouded Fable (2 pakker)</h3>
+      <p class="price" data-da="Pris: 75 kr" data-en="Price: 75 DKK">Pris: 75 kr</p>
+      <button onclick="addToCart('Shrouded Fable', 75)">Læg i kurv</button>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/250x150?text=Journey+Together" alt="Journey Together">
+      <h3 class="title" data-da="Journey Together (3 pakker)" data-en="Journey Together (3 packs)">Journey Together (3 pakker)</h3>
+      <p class="price" data-da="Pris: 110 kr" data-en="Price: 110 DKK">Pris: 110 kr</p>
+      <button onclick="addToCart('Journey Together', 110)">Læg i kurv</button>
+    </div>
+  </div>
+
+  <div class="checkout">
+    <h2 id="cart-title">Kurv</h2>
+    <ul id="cart"></ul>
+    <p id="total">Total: 0 kr</p>
+    <div class="paypal-button">
+      <p>(Her indsættes PayPal-knap med din PayPal business e-mail)</p>
+    </div>
+  </div>
+
+  <script>
+    let cart = [];
+
+    function addToCart(item, price) {
+      cart.push({ item, price });
+      updateCart();
+    }
+
+    function updateCart() {
+      const cartEl = document.getElementById('cart');
+      const totalEl = document.getElementById('total');
+      cartEl.innerHTML = '';
+      let total = 0;
+      cart.forEach(i => {
+        total += i.price;
+        const li = document.createElement('li');
+        li.textContent = `${i.item} - ${i.price} kr`;
+        cartEl.appendChild(li);
+      });
+      totalEl.textContent = `Total: ${total} kr`;
+    }
+
+    function switchLanguage(lang) {
+      document.querySelectorAll('[data-da]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+      });
+      document.getElementById('cart-title').textContent = lang === 'en' ? 'Cart' : 'Kurv';
+      document.getElementById('total').textContent = lang === 'en' ? `Total: ${getCartTotal()} DKK` : `Total: ${getCartTotal()} kr`;
+    }
+
+    function getCartTotal() {
+      return cart.reduce((sum, i) => sum + i.price, 0);
+    }
+  </script>
+</body>
+</html>
