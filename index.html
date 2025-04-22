@@ -1,20 +1,102 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TheOnlyDvaergen</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TheOnlyDvaergen - RIP & SHIP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; background: #f4f4f4; color: #333; }
-    header { background: #222; color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
-    .logo { font-size: 1.5rem; font-weight: bold; }
-    .flags img { width: 30px; cursor: pointer; margin-left: 10px; }
-    .container { padding: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
-    .card { background: white; padding: 1rem; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; }
-    .card img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; }
-    .card button { background: #0070ba; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; margin-top: 1rem; }
-    .checkout { margin-top: 2rem; text-align: center; }
-    .paypal-button { margin-top: 1rem; }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #111;
+      color: #eee;
+    }
+    header {
+      background-color: #1e1e1e;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #444;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    .flags img {
+      width: 32px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+    .hero {
+      padding: 2rem;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: #ccc;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+    }
+    .card {
+      background-color: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 12px;
+      text-align: center;
+      padding: 1rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 15px rgba(255,255,255,0.1);
+    }
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .card h3, .card p {
+      margin: 0.5rem 0;
+    }
+    .card button {
+      background: #ffc439;
+      border: none;
+      padding: 10px 20px;
+      color: black;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .checkout {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid #444;
+    }
+    .checkout ul {
+      list-style: none;
+      padding: 0;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #1e1e1e;
+      border-top: 1px solid #333;
+      color: #888;
+    }
   </style>
 </head>
 <body>
@@ -25,24 +107,29 @@
       <img src="https://flagcdn.com/w40/gb.png" alt="English" onclick="switchLanguage('en')">
     </div>
   </header>
-  
+
+  <div class="hero">
+    <h1>Velkommen til RIP & SHIP</h1>
+    <p>Vælg dine Scarlet & Violet Pokémon pakker og betal direkte via PayPal.</p>
+  </div>
+
   <div class="container">
     <div class="card">
       <img src="https://via.placeholder.com/250x150?text=Stellar+Crown" alt="Stellar Crown">
-      <h3 class="title" data-da="Stellar Crown (1 pakke)" data-en="Stellar Crown (1 pack)">Stellar Crown (1 pakke)</h3>
-      <p class="price" data-da="Pris: 39 kr" data-en="Price: 39 DKK">Pris: 39 kr</p>
+      <h3 data-da="Stellar Crown (1 pakke)" data-en="Stellar Crown (1 pack)">Stellar Crown (1 pakke)</h3>
+      <p data-da="Pris: 39 kr" data-en="Price: 39 DKK">Pris: 39 kr</p>
       <button onclick="addToCart('Stellar Crown', 39)">Læg i kurv</button>
     </div>
     <div class="card">
       <img src="https://via.placeholder.com/250x150?text=Shrouded+Fable" alt="Shrouded Fable">
-      <h3 class="title" data-da="Shrouded Fable (2 pakker)" data-en="Shrouded Fable (2 packs)">Shrouded Fable (2 pakker)</h3>
-      <p class="price" data-da="Pris: 75 kr" data-en="Price: 75 DKK">Pris: 75 kr</p>
+      <h3 data-da="Shrouded Fable (2 pakker)" data-en="Shrouded Fable (2 packs)">Shrouded Fable (2 pakker)</h3>
+      <p data-da="Pris: 75 kr" data-en="Price: 75 DKK">Pris: 75 kr</p>
       <button onclick="addToCart('Shrouded Fable', 75)">Læg i kurv</button>
     </div>
     <div class="card">
       <img src="https://via.placeholder.com/250x150?text=Journey+Together" alt="Journey Together">
-      <h3 class="title" data-da="Journey Together (3 pakker)" data-en="Journey Together (3 packs)">Journey Together (3 pakker)</h3>
-      <p class="price" data-da="Pris: 110 kr" data-en="Price: 110 DKK">Pris: 110 kr</p>
+      <h3 data-da="Journey Together (3 pakker)" data-en="Journey Together (3 packs)">Journey Together (3 pakker)</h3>
+      <p data-da="Pris: 110 kr" data-en="Price: 110 DKK">Pris: 110 kr</p>
       <button onclick="addToCart('Journey Together', 110)">Læg i kurv</button>
     </div>
   </div>
@@ -51,10 +138,19 @@
     <h2 id="cart-title">Kurv</h2>
     <ul id="cart"></ul>
     <p id="total">Total: 0 kr</p>
-    <div class="paypal-button">
-      <p>(Her indsættes PayPal-knap med din PayPal business e-mail)</p>
-    </div>
+    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" onsubmit="return updatePayPalAmount();">
+      <input type="hidden" name="business" value="DIN_PAYPAL_EMAIL">
+      <input type="hidden" name="cmd" value="_xclick">
+      <input type="hidden" name="item_name" value="Pokémon pakker fra TheOnlyDvaergen">
+      <input type="hidden" name="currency_code" value="DKK">
+      <input type="hidden" name="amount" id="paypal-amount" value="0">
+      <button type="submit">Betal med PayPal</button>
+    </form>
   </div>
+
+  <footer>
+    &copy; 2025 TheOnlyDvaergen - Kontakt os via Discord for spørgsmål.
+  </footer>
 
   <script>
     let cart = [];
@@ -78,16 +174,22 @@
       totalEl.textContent = `Total: ${total} kr`;
     }
 
+    function getCartTotal() {
+      return cart.reduce((sum, i) => sum + i.price, 0);
+    }
+
+    function updatePayPalAmount() {
+      const total = getCartTotal();
+      document.getElementById('paypal-amount').value = total;
+      return true;
+    }
+
     function switchLanguage(lang) {
       document.querySelectorAll('[data-da]').forEach(el => {
         el.textContent = el.getAttribute(`data-${lang}`);
       });
       document.getElementById('cart-title').textContent = lang === 'en' ? 'Cart' : 'Kurv';
-      document.getElementById('total').textContent = lang === 'en' ? `Total: ${getCartTotal()} DKK` : `Total: ${getCartTotal()} kr`;
-    }
-
-    function getCartTotal() {
-      return cart.reduce((sum, i) => sum + i.price, 0);
+      updateCart();
     }
   </script>
 </body>
