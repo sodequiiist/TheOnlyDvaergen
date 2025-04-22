@@ -7,9 +7,6 @@
   <title>TheOnlyDvaergen - RIP & SHIP</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-    }
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
@@ -34,7 +31,6 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.6);
     }
     .logo {
       font-size: 1.5rem;
@@ -64,37 +60,53 @@
       border-radius: 10px;
       overflow: hidden;
       width: 300px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.4);
       text-align: center;
+      padding-bottom: 1rem;
     }
     .card img {
       width: 100%;
       height: 200px;
       object-fit: cover;
     }
-    .card h3 {
-      margin: 10px 0 0;
-      font-size: 1.2rem;
-    }
-    .card p {
-      color: #ccc;
+    .card input[type='number'] {
+      width: 60px;
+      padding: 5px;
+      margin: 10px auto;
     }
     .card button {
-      margin: 1rem;
-      padding: 10px 20px;
       background: #ffc439;
       border: none;
-      border-radius: 6px;
+      padding: 10px 20px;
+      color: #000;
       font-weight: bold;
+      border-radius: 5px;
       cursor: pointer;
-      color: #111;
+    }
+    .card h3, .card p {
+      margin: 10px 0 5px;
+    }
+    #cart-page, #contact-page {
+      display: none;
+      max-width: 800px;
+      margin: 2rem auto;
+      background: rgba(20, 20, 20, 0.95);
+      padding: 2rem;
+      border-radius: 10px;
     }
     footer {
       background: #111;
       text-align: center;
-      color: #888;
       padding: 1rem;
-      margin-top: 3rem;
+      margin-top: 2rem;
+      color: #aaa;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      font-family: 'Poppins', sans-serif;
     }
   </style>
 </head>
@@ -102,36 +114,90 @@
   <header>
     <div class="logo">TheOnlyDvaergen</div>
     <nav>
-      <a href="#">Forside</a>
-      <a href="#">Kontakt</a>
-      <a href="#">Live</a>
-      <a href="#" onclick="alert('Kurv kommer snart!')">🛒 Kurv</a>
+      <a href="#" onclick="showSection('products')">Forside</a>
+      <a href="#" onclick="showSection('contact-page')">Kontakt</a>
+      <a href="#" onclick="showSection('cart-page')">🛒 Kurv (<span id="cart-count">0</span>)</a>
     </nav>
   </header>
 
-  <div class="container">
+  <div class="container" id="products">
     <div class="card">
       <img src="https://i.imgur.com/yMQSnVZ.jpeg" alt="Stellar Crown">
       <h3>Stellar Crown</h3>
-      <p>1 pakke - 39 kr</p>
-      <button onclick="alert('Lagt i kurv: Stellar Crown')">Læg i kurv</button>
+      <p>Pris: 45 kr</p>
+      <input type="number" min="1" value="1" id="qty1">
+      <button onclick="addToCart('Stellar Crown', 45, 'qty1')">Læg i kurv</button>
     </div>
     <div class="card">
       <img src="https://i.imgur.com/ablg1tH.jpeg" alt="Shrouded Fable">
       <h3>Shrouded Fable</h3>
-      <p>2 pakker - 75 kr</p>
-      <button onclick="alert('Lagt i kurv: Shrouded Fable')">Læg i kurv</button>
+      <p>Pris: 45 kr</p>
+      <input type="number" min="1" value="1" id="qty2">
+      <button onclick="addToCart('Shrouded Fable', 45, 'qty2')">Læg i kurv</button>
     </div>
     <div class="card">
       <img src="https://i.imgur.com/Hwig0yq.jpeg" alt="Journey Together">
       <h3>Journey Together</h3>
-      <p>3 pakker - 110 kr</p>
-      <button onclick="alert('Lagt i kurv: Journey Together')">Læg i kurv</button>
+      <p>Pris: 45 kr</p>
+      <input type="number" min="1" value="1" id="qty3">
+      <button onclick="addToCart('Journey Together', 45, 'qty3')">Læg i kurv</button>
     </div>
   </div>
 
+  <div id="cart-page">
+    <h2>Din kurv</h2>
+    <ul id="cart-items"></ul>
+    <p id="total">Total: 0 kr</p>
+  </div>
+
+  <div id="contact-page">
+    <h2>Kontakt os</h2>
+    <form action="mailto:dinemail@eksempel.dk" method="POST" enctype="text/plain">
+      <label for="name">Navn:</label>
+      <input type="text" id="name" name="name" required>
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" name="email" required>
+      <label for="message">Besked:</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+      <button type="submit">Send besked</button>
+    </form>
+  </div>
+
   <footer>
-    &copy; 2025 TheOnlyDvaergen - RIP & SHIP
+    &copy; 2025 TheOnlyDvaergen - Alle rettigheder forbeholdes.
   </footer>
+
+  <script>
+    let cart = [];
+
+    function showSection(id) {
+      document.getElementById('products').style.display = id === 'products' ? 'flex' : 'none';
+      document.getElementById('cart-page').style.display = id === 'cart-page' ? 'block' : 'none';
+      document.getElementById('contact-page').style.display = id === 'contact-page' ? 'block' : 'none';
+    }
+
+    function addToCart(item, price, qtyId) {
+      const qty = parseInt(document.getElementById(qtyId).value);
+      cart.push({ item, price, qty });
+      updateCart();
+    }
+
+    function updateCart() {
+      const cartList = document.getElementById('cart-items');
+      const totalEl = document.getElementById('total');
+      const countEl = document.getElementById('cart-count');
+      cartList.innerHTML = '';
+      let total = 0;
+      cart.forEach(i => {
+        const li = document.createElement('li');
+        const subtotal = i.price * i.qty;
+        li.textContent = `${i.item} x${i.qty} - ${subtotal} kr`;
+        cartList.appendChild(li);
+        total += subtotal;
+      });
+      totalEl.textContent = `Total: ${total} kr`;
+      countEl.textContent = cart.length;
+    }
+  </script>
 </body>
 </html>
